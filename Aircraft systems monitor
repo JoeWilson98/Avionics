@@ -1,0 +1,135 @@
+#Temperature monitor
+print("""
+====================== AIRCRAFT SYSTEM MONITOR ======================""")
+
+def aircraft_temp(temperature):
+    if temperature > 90:
+           status = "CRITICAL! TEMPERATURE IS WAY TOO HIGH. PLEASE TAKE ACTION"
+           critical.append("Temperature")
+           return temperature, status
+
+    elif temperature < 30:
+            status = "WARNING!TEMPERATURE IS TOO LOW. PLEASE TAKE ACTION"
+            warning.append("Temperature")
+            return temperature, status
+    else:
+        status = "NORMAL"
+        normal.append("Temperature")
+        return temperature, status
+
+def aircraft_oil_pressure(oil_pressure):
+    if oil_pressure > 60:
+        status = "CRITICAL! OIL PRESSURE IS TOO HIGH. PLEASE TAKE ACTION"
+        critical.append("Oil pressure")
+        return oil_pressure, status
+
+    elif oil_pressure < 30:
+        status = "WARNING! OIL PRESSURE IS TOO LOW. PLEASE TAKE ACTION"
+        warning.append("Oil pressure")
+        return oil_pressure, status
+    else:
+        status = "NORMAL"
+        normal.append("Oil pressure")
+        return oil_pressure, status
+
+def aircraft_rpm(engine_rmp):
+    if engine_rmp > 3500:
+        status = "WARNING! RPM IS TOO HIGH. PLEASE TAKE ACTION"
+        warning.append("RPM")
+        return engine_rmp, status
+    elif engine_rmp < 1000:
+        status = "CRITICAL! RPM IS TOO LOW. PLEASE TAKE ACTION"
+        critical.append("RPM")
+        return engine_rmp, status
+    else:
+        status = "NORMAL"
+        normal.append("RPM")
+        return engine_rmp, status
+
+def status_crit(critical):
+    for item in critical:
+        print(item)
+def status_warn(warning):
+    for item in warning:
+        print(item)
+
+
+
+while True:
+    critical = []
+    warning = []
+    normal = []
+    menu_input = input("""
+1. Input system diagnostics
+2. View log
+3. Quit
+""")
+    
+    if menu_input == 1:
+        
+        temperature = float(input("Please enter the temperature in Celsius: "))
+        temp_value, temp_status = aircraft_temp(temperature)
+    
+        Oil_pressure =  float(input("Please enter the Oil pressure: "))
+        aircraft_oil, aircraft_oil_status = aircraft_oil_pressure(Oil_pressure)
+    
+        Engine_RMP = float(input("Please enter the Engine RPM: "))
+        air_rpm, air_rpm_status = aircraft_rpm(Engine_RMP)
+    
+        print("""
+        Temperature: {}
+        Status: {}
+
+        Oil Pressure: {}
+        status:{}
+
+        Engine RPM: {}
+        status:{}
+        """.format(aircraft_temp, temp_status, Oil_pressure, aircraft_oil_status, air_rpm, air_rpm_status))
+    
+        if len(critical) > 0:
+            over_status = "CRITICAL"
+    
+            print("""
+    ========== OVERALL STATUS ==========
+    STATUS: {}
+
+    Systems requiring attention:
+                            """.format(over_status))
+    
+            status_crit(critical)
+            status_warn(warning)
+    
+            print("===============================")
+    
+        elif len(warning) > 0:
+            over_status = "WARNING"
+    
+            print("""
+    ========== OVERALL STATUS ==========
+    STATUS: {}
+
+    Systems requiring attention:
+                            """.format(over_status))
+    
+            status_crit(critical)
+            status_warn(warning)
+    
+            print("===============================")
+    
+    
+        else:
+            over_status = "NORMAL"
+            print("""
+    ========== OVERALL STATUS ==========
+    STATUS: {}
+    ====================================""".format(over_status))
+
+
+
+
+
+
+
+
+
