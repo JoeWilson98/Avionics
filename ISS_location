@@ -1,0 +1,34 @@
+import json
+import urllib.request
+import geocoder
+import time
+
+url_astronauts = "http://api.open-notify.org/astros.json"
+response = urllib.request.urlopen(url_astronauts)
+result = json.loads(response.read())
+
+print(f"{'CRAFT':>10} : {'ASTRONAUT':>3}")
+print("----------------------------------")
+for astronauts in result["people"]:
+    print("{:>10} : {:>5}".format(astronauts["craft"], astronauts["name"]))
+
+print("\nCurrent number of astronauts in space:", len(result["people"]))
+
+g = geocoder.ip('me')
+print("Your current location: Latitude {} Longitude {}".format(g.lat, g.lng))
+
+
+print("\nLocation of ISS in real time:")
+while True:
+    url_iss = "http://api.open-notify.org/iss-now.json"
+    response = urllib.request.urlopen(url_iss)
+    result = json.loads(response.read())
+
+    lat = float(result["iss_position"]["latitude"])
+    lon = float(result["iss_position"]["longitude"])
+
+
+    print("Latitude : {}, Longitude : {}".format(lat, lon))
+
+
+    time.sleep(5)
