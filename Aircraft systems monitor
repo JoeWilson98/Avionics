@@ -66,12 +66,15 @@ def main():
             print(item)
 
 
-    menu_input = int(input("""
+    try:
+        menu_input = int(input("""
     1. Input system diagnostics
     2. View log
     3. Quit
     Please enter an option: """))
 
+    except:
+        print("You must input a number between 1 and 3.")
 
     while True:
         critical = []
@@ -102,7 +105,7 @@ def main():
 
             if len(critical) > 0:
                 over_status = "CRITICAL"
-                log.append("\n{} {}".format(time, over_status, critical))
+                log.append("\n{} {}".format(time, ",".join(critical), over_status))
 
                 print("""
         ========== OVERALL STATUS ==========
@@ -118,7 +121,7 @@ def main():
 
             elif len(warning) > 0:
                 over_status = "WARNING"
-                log.append("\n{} {}".format(time, over_status, warning))
+                log.append("\n{} {} {}".format(time, ",".join(warning), over_status))
 
                 print("""
         ========== OVERALL STATUS ==========
@@ -159,7 +162,6 @@ def main():
 
 
 main()
-
 
 
 
